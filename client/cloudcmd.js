@@ -10,7 +10,24 @@ const {registerSW, listenSW} = require('./sw/register');
 
 const isDev = process.env.NODE_ENV === 'development';
 
-module.exports = window.CloudCmd = async (config) => {
+module.exports = async (config) => {
+    window.Util = require('../common/util');
+    window.CloudFunc = require('../common/cloudfunc');
+    
+    window.DOM = require('./dom');
+    window.CloudCmd = require('./client');
+    
+    await register(config);
+    
+    require('./listeners');
+    require('./key');
+    require('./sort');
+    
+    const prefix = getPrefix(config.prefix);
+    
+    window.CloudCmd.init(prefix, config);
+};
+window.CloudCmd = async (config) => {
     window.Util = require('../common/util');
     window.CloudFunc = require('../common/cloudfunc');
     
