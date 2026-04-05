@@ -1,4 +1,4 @@
-FROM node:25-bookworm
+FROM ubuntu
 
 LABEL maintainer="Coderaiser"
 LABEL org.opencontainers.image.source="https://github.com/coderaiser/cloudcmd"
@@ -14,11 +14,12 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 ARG GO_VERSION=1.21.2
 ARG NVIM_VERSION=0.12.0
+ARG UBUNTU_DEPS="libatomic1 curl wget git"
 
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get autoremove && \
-    apt-get install -y less ffmpeg net-tools netcat-openbsd mc iputils-ping vim bat fzf locales sudo command-not-found ncdu aptitude htop btop hexyl && \
+    apt-get install -y ${UBUNTU_DEPS} less ffmpeg net-tools netcat-openbsd mc iputils-ping vim bat fzf locales sudo command-not-found ncdu aptitude htop btop hexyl && \
     echo "> Update command-not-found database. Run 'sudo apt update' to populate it." && \
     apt-get update && \
     apt-get autoremove && \
@@ -26,32 +27,34 @@ RUN apt-get update && \
     echo "> install neovim" && \
     wget https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz && \
     tar zxf nvim-linux-x86_64.tar.gz && \
-    mv nvim-linux-x86_64 /usr/local/src/nvim && \
-    ln -s /usr/local/src/nvim/bin/nvim /usr/local/bin/nvim && \
+    mv -f nvim-linux-x86_64 /usr/local/src/nvim && \
+    ln -fs /usr/local/src/nvim/bin/nvim /usr/local/bin/nvim && \
     echo "> install nvm" && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash && \
-    mv ~/.nvm /usr/local/src/nvm && \
+    . ~/.nvm/nvm.sh && \
+    mv -f ~/.nvm /usr/local/src/nvm && \
+    nvm i node && \
     echo "> install npm globals" && \
     npm i wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
     echo "> install bun" && \
     curl -fsSL https://bun.sh/install | bash && \
-    mv ~/.bun /usr/local/src/bun && \
-    ln -s /usr/local/src/bun/bin/bun /usr/local/bin/bun && \
+    mv -f ~/.bun /usr/local/src/bun && \
+    ln -fs /usr/local/src/bun/bin/bun /usr/local/bin/bun && \
     echo "> install deno" && \
     curl -fsSL https://deno.land/install.sh | sh && \
     mv ~/.deno /usr/local/src/deno && \
-    ln -s /usr/local/src/deno/bin/deno /usr/local/bin/deno && \
+    ln -fs /usr/local/src/deno/bin/deno /usr/local/bin/deno && \
     echo "> install golang" && \
     curl -fsSL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz -o go.tar.gz && \
     tar -C /usr/local/src -xzf go.tar.gz && \
     rm go.tar.gz && \
-    ln -s /usr/local/src/go/bin/go /usr/local/bin/go && \
-    ln -s /usr/local/src/go/bin/gofmt /usr/local/bin/gofmt && \
+    ln -fs /usr/local/src/go/bin/go /usr/local/bin/go && \
+    ln -fs /usr/local/src/go/bin/gofmt /usr/local/bin/gofmt && \
     echo "> install rust" && \
     curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
-    mv ~/.cargo /usr/local/src/cargo && \
+    mv -f ~/.cargo /usr/local/src/cargo && \
     rustup default stable && \
-    mv ~/.rustup /usr/local/src/rustup && \
+    mv -f ~/.rustup /usr/local/src/rustup && \
     echo "> install gritty" && \
     bun r gritty --omit dev && \
     bun i gritty --omit dev && \
@@ -86,7 +89,7 @@ ENV cloudcmd_terminal=true \
     cloudcmd_terminal_path=gritty \
     cloudcmd_open=false \
     PATH=node_modules/.bin:$PATH \
-    PATH=$HOME/.local/bin:$PATH \
+    PATH=~/.local/bin:$PATH \
     BUN_INSTALL_CACHE_DIR=/tmp/bun-cache \
     DENO_DIR=/tmp/deno-cache \
     LANG=en_US.UTF-8 \
