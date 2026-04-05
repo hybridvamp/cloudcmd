@@ -1,4 +1,4 @@
-FROM node
+FROM node:25-bookworm
 
 LABEL maintainer="Coderaiser"
 LABEL org.opencontainers.image.source="https://github.com/coderaiser/cloudcmd"
