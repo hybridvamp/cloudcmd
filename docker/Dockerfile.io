@@ -12,7 +12,8 @@ COPY package.json /usr/src/cloudcmd/
 ENV DEBIAN_FRONTEND=noninteractive \
     PATH=/usr/local/src/cargo/bin:$PATH \
     NVM_DIR=/usr/local/src/nvm \
-    DENO_DIR=/usr/local/src/deno
+    DENO_DIR=/usr/local/src/deno \
+    npm_config_cache=/tmp/npm-cache
 
 ARG GO_VERSION=1.21.2
 ARG NVIM_VERSION=0.12.0
