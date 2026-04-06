@@ -11,7 +11,8 @@ COPY package.json /usr/src/cloudcmd/
 
 ENV DEBIAN_FRONTEND=noninteractive \
     PATH=/usr/local/src/cargo/bin:$PATH \
-    NVM_DIR=/usr/local/src/nvm
+    NVM_DIR=/usr/local/src/nvm \
+    DENO_DIR=/usr/local/src/deno
 
 ARG GO_VERSION=1.21.2
 ARG NVIM_VERSION=0.12.0
@@ -44,7 +45,6 @@ RUN apt-get update && \
     ln -fs /usr/local/src/bun/bin/bun /usr/local/bin/bun && \
     echo "> install deno" && \
     curl -fsSL https://deno.land/install.sh | sh && \
-    mv ~/.deno /usr/local/src/deno && \
     ln -fs /usr/local/src/deno/bin/deno /usr/local/bin/deno && \
     echo "> install golang" && \
     curl -fsSL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz -o go.tar.gz && \
