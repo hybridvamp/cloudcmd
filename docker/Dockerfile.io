@@ -10,7 +10,8 @@ WORKDIR /usr/src/cloudcmd
 COPY package.json /usr/src/cloudcmd/
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    PATH=/usr/local/src/cargo/bin:$PATH
+    PATH=/usr/local/src/cargo/bin:$PATH \
+    NVM_DIR=/usr/local/src/nvm
 
 ARG GO_VERSION=1.21.2
 ARG NVIM_VERSION=0.12.0
@@ -30,10 +31,11 @@ RUN apt-get update && \
     mv -f nvim-linux-x86_64 /usr/local/src/nvim && \
     ln -fs /usr/local/src/nvim/bin/nvim /usr/local/bin/nvim && \
     echo "> install nvm" && \
+    mkdir $NVM_DIR && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash && \
-    . ~/.nvm/nvm.sh && \
-    mv -f ~/.nvm /usr/local/src/nvm && \
+    . ${NVM_DIR}/nvm.sh && \
     nvm i node && \
+    ln -fs /${NVM_DIR}/versions/node/$(node -v)/bin/node /usr/local/bin/node && \
     echo "> install npm globals" && \
     npm i wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
     echo "> install bun" && \
