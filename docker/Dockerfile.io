@@ -14,7 +14,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 ARG GO_VERSION=1.21.2
 ARG NVIM_VERSION=0.12.0
-ARG UBUNTU_DEPS="libatomic1 curl wget git"
+ARG UBUNTU_DEPS="libatomic1 curl wget git net-tools iproute2"
 
 RUN apt-get update && \
     apt-get upgrade -y && \
