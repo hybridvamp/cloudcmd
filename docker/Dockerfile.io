@@ -13,6 +13,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     PATH=/usr/local/src/cargo/bin:$PATH \
     NVM_DIR=/usr/local/src/nvm \
     DENO_DIR=/usr/local/src/deno \
+    BUN_INSTALL=/usr/local/src/bun \
     npm_config_cache=/tmp/npm-cache
 
 ARG GO_VERSION=1.21.2
@@ -42,7 +43,6 @@ RUN apt-get update && \
     npm i wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
     echo "> install bun" && \
     curl -fsSL https://bun.sh/install | bash && \
-    mv -f ~/.bun /usr/local/src/bun && \
     ln -fs /usr/local/src/bun/bin/bun /usr/local/bin/bun && \
     echo "> install deno" && \
     curl -fsSL https://deno.land/install.sh | sh && \
