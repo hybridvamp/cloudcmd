@@ -14,7 +14,9 @@ ENV DEBIAN_FRONTEND=noninteractive \
     NVM_DIR=/usr/local/src/nvm \
     DENO_DIR=/usr/local/src/deno \
     BUN_INSTALL=/usr/local/src/bun \
-    npm_config_cache=/tmp/npm-cache
+    npm_config_cache=/tmp/npm-cache \
+    RUSTUP_HOME=/usr/local/src/rustup \
+    CARGO_HOME=/usr/local/src/cargo
 
 ARG GO_VERSION=1.21.2
 ARG NVIM_VERSION=0.12.0
@@ -54,10 +56,8 @@ RUN apt-get update && \
     ln -fs /usr/local/src/go/bin/go /usr/local/bin/go && \
     ln -fs /usr/local/src/go/bin/gofmt /usr/local/bin/gofmt && \
     echo "> install rust" && \
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && \
-    mv -f ~/.cargo /usr/local/src/cargo && \
+    bash -c "$(curl -fsSL https://sh.rustup.rs)" -- -y && \
     rustup default stable && \
-    mv -f ~/.rustup /usr/local/src/rustup && \
     echo "> install gritty" && \
     bun r gritty --omit dev && \
     bun i gritty --omit dev && \
