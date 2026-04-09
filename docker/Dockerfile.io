@@ -11,32 +11,45 @@ COPY package.json /usr/src/cloudcmd/
 
 ENV DEBIAN_FRONTEND=noninteractive \
     NVM_DIR=/usr/local/src/nvm \
-    npm_config_cache=/tmp/npm-cache
+    PREFIX=/usr/local \
+    npm_config_cache=/tmp/npm-cache \
+    PATH=/usr/local/src/bun/bin:$PATH \
+    BUN_INSTALL=/usr/local/src/bun \
+    NPM_CONFIG_CACHE=/tmp/.npm
 
 ARG GO_VERSION=1.21.2
 ARG NVIM_VERSION=0.12.0
 ARG UBUNTU_DEPS="libatomic1 curl wget git net-tools iproute2"
+ARG RUST_DEPS="build-essential"
+ARG HASKELL_DEPS="build-essential curl libffi-dev libffi8 libgmp-dev libgmp10 libncurses-dev pkg-config"
+ARG DEPS="upx-ucl less ffmpeg net-tools netcat-openbsd mc iputils-ping vim bat fzf locales sudo command-not-found ncdu aptitude htop btop hexyl"
 
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get autoremove && \
-    apt-get install -y ${UBUNTU_DEPS} less ffmpeg net-tools netcat-openbsd mc iputils-ping vim bat fzf locales sudo command-not-found ncdu aptitude htop btop hexyl && \
+    apt-get install -y ${UBUNTU_DEPS} ${RUST_DEPES} ${HASKELL_DEPS} ${DEPS} && \
     echo "> Update command-not-found database. Run 'sudo apt update' to populate it." && \
     apt-get update && \
     apt-get autoremove && \
     apt-get clean && \
-    echo "> install nvm" && \
-    mkdir $NVM_DIR && \
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash && \
-    . ${NVM_DIR}/nvm.sh && \
+    echo "> create user" && \
+    useradd -m -s /bin/bash -u 1337 instalador && \
+    chown -R instalador /usr/local && \
+    chown -R instalador /usr/local && \
+    su instalador && \
+    echo "> install bun" && \
+    curl https://bun.sh/install | bash && \
+    echo "> install npm globals" && \
+    bun i palabra wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
+    echo "> install rust go deno bun fasm nvim" && \
+    bun ${BUN_INSTALL}/bin/palabra i nvm rust go deno fasm nvim haskell -d /usr/local/src && \
+    echo "> install node" && \
+    . $NVM_DIR/nvm.sh && \
     nvm i node && \
     ln -fs /${NVM_DIR}/versions/node/$(node -v)/bin/node /usr/local/bin/node && \
-    echo "> install palabra" && \
-    npm i palabra -g && \
-    echo "> install rust go deno bun fasm nvim" && \
-    palabra i rust go deno bun fasm nvim -d /usr/local/src && \
-    echo "> install npm globals" && \
-    bun i wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
+    echo "> remove user" && \
+    exit && \
+    userdel -r instalador && \
     echo "> install gritty" && \
     bun r gritty --omit dev && \
     bun i gritty --omit dev && \
@@ -72,6 +85,7 @@ ENV cloudcmd_terminal=true \
     cloudcmd_open=false \
     PATH=node_modules/.bin:$PATH \
     PATH=~/.local/bin:$PATH \
+    PATH=/usr/local/src/bun/bin:$PATH \
     BUN_INSTALL_CACHE_DIR=/tmp/bun-cache \
     DENO_DIR=/tmp/deno-cache \
     LANG=en_US.UTF-8 \
