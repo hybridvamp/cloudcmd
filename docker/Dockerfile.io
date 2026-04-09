@@ -10,13 +10,8 @@ WORKDIR /usr/src/cloudcmd
 COPY package.json /usr/src/cloudcmd/
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    PATH=/usr/local/src/cargo/bin:$PATH \
     NVM_DIR=/usr/local/src/nvm \
-    DENO_DIR=/usr/local/src/deno \
-    BUN_INSTALL=/usr/local/src/bun \
-    npm_config_cache=/tmp/npm-cache \
-    RUSTUP_HOME=/usr/local/src/rustup \
-    CARGO_HOME=/usr/local/src/cargo
+    npm_config_cache=/tmp/npm-cache
 
 ARG GO_VERSION=1.21.2
 ARG NVIM_VERSION=0.12.0
@@ -30,34 +25,18 @@ RUN apt-get update && \
     apt-get update && \
     apt-get autoremove && \
     apt-get clean && \
-    echo "> install neovim" && \
-    wget https://github.com/neovim/neovim/releases/download/v${NVIM_VERSION}/nvim-linux-x86_64.tar.gz && \
-    tar zxf nvim-linux-x86_64.tar.gz && \
-    mv -f nvim-linux-x86_64 /usr/local/src/nvim && \
-    ln -fs /usr/local/src/nvim/bin/nvim /usr/local/bin/nvim && \
     echo "> install nvm" && \
     mkdir $NVM_DIR && \
     curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.4/install.sh | bash && \
     . ${NVM_DIR}/nvm.sh && \
     nvm i node && \
     ln -fs /${NVM_DIR}/versions/node/$(node -v)/bin/node /usr/local/bin/node && \
+    echo "> install palabra" && \
+    npm i palabra -g && \
+    echo "> install rust go deno bun fasm nvim" && \
+    palabra i rust go deno bun fasm nvim -d /usr/local/src && \
     echo "> install npm globals" && \
-    npm i wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
-    echo "> install bun" && \
-    curl -fsSL https://bun.sh/install | bash && \
-    ln -fs /usr/local/src/bun/bin/bun /usr/local/bin/bun && \
-    echo "> install deno" && \
-    curl -fsSL https://deno.land/install.sh | sh && \
-    ln -fs /usr/local/src/deno/bin/deno /usr/local/bin/deno && \
-    echo "> install golang" && \
-    curl -fsSL https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz -o go.tar.gz && \
-    tar -C /usr/local/src -xzf go.tar.gz && \
-    rm go.tar.gz && \
-    ln -fs /usr/local/src/go/bin/go /usr/local/bin/go && \
-    ln -fs /usr/local/src/go/bin/gofmt /usr/local/bin/gofmt && \
-    echo "> install rust" && \
-    bash -c "$(curl -fsSL https://sh.rustup.rs)" -- -y && \
-    rustup default stable && \
+    bun i wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
     echo "> install gritty" && \
     bun r gritty --omit dev && \
     bun i gritty --omit dev && \
