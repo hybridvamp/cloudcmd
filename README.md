@@ -1,4 +1,4 @@
-# Cloud Commander v19.11.14 [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![Codacy][CodacyIMG]][CodacyURL] [![Gitter][GitterIMGURL]][GitterURL]
+# Cloud Commander v19.12.0 [![Build Status][BuildStatusIMGURL]][BuildStatusURL] [![Codacy][CodacyIMG]][CodacyURL] [![Gitter][GitterIMGURL]][GitterURL]
 
 ### [Main][MainURL] [Blog][BlogURL] [Support][SupportURL] [Demo][DemoURL]
 
