@@ -22,7 +22,7 @@ ARG NVIM_VERSION=0.12.0
 ARG UBUNTU_DEPS="libatomic1 curl wget git net-tools iproute2"
 ARG RUST_DEPS="build-essential"
 ARG HASKELL_DEPS="build-essential curl libffi-dev libffi8 libgmp-dev libgmp10 libncurses-dev pkg-config"
-ARG DEPS="upx-ucl less ffmpeg net-tools netcat-openbsd mc iputils-ping vim bat fzf locales sudo command-not-found ncdu aptitude htop btop hexyl"
+ARG DEPS="gdb upx-ucl less ffmpeg net-tools netcat-openbsd mc iputils-ping vim bat fzf locales sudo command-not-found ncdu aptitude htop btop hexyl"
 
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -42,7 +42,7 @@ RUN apt-get update && \
     echo "> install npm globals" && \
     bun i palabra wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
     echo "> install rust go deno bun fasm nvim" && \
-    bun ${BUN_INSTALL}/bin/palabra i nvm rust go deno fasm nvim haskell -d /usr/local/src && \
+    bun ${BUN_INSTALL}/bin/palabra i nvm rust go deno fasm nvim haskell rizin yara -d /usr/local/src && \
     echo "> install node" && \
     . $NVM_DIR/nvm.sh && \
     nvm i node && \
