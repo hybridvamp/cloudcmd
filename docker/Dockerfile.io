@@ -17,17 +17,14 @@ ENV DEBIAN_FRONTEND=noninteractive \
     BUN_INSTALL=/usr/local/src/bun \
     NPM_CONFIG_CACHE=/tmp/.npm
 
-ARG GO_VERSION=1.21.2
-ARG NVIM_VERSION=0.12.0
 ARG UBUNTU_DEPS="libatomic1 curl wget git net-tools iproute2"
 ARG RUST_DEPS="build-essential"
-ARG HASKELL_DEPS="build-essential curl libffi-dev libffi8 libgmp-dev libgmp10 libncurses-dev pkg-config"
 ARG DEPS="gdb upx-ucl less ffmpeg net-tools netcat-openbsd mc iputils-ping vim bat fzf locales sudo command-not-found ncdu aptitude htop btop hexyl"
 
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get autoremove && \
-    apt-get install -y ${UBUNTU_DEPS} ${RUST_DEPES} ${HASKELL_DEPS} ${DEPS} && \
+    apt-get install -y ${UBUNTU_DEPS} ${RUST_DEPES} ${DEPS} && \
     echo "> Update command-not-found database. Run 'sudo apt update' to populate it." && \
     apt-get update && \
     apt-get autoremove && \
@@ -35,20 +32,24 @@ RUN apt-get update && \
     echo "> create user" && \
     useradd -m -s /bin/bash -u 1337 instalador && \
     chown -R instalador /usr/local && \
-    chown -R instalador /usr/local && \
-    su instalador && \
-    echo "> install bun" && \
+    chown -R instalador /tmp
+
+USER instalador
+
+RUN echo "> install bun" && \
     curl https://bun.sh/install | bash && \
     echo "> install npm globals" && \
     bun i palabra wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
     echo "> install rust go deno bun fasm nvim" && \
-    bun ${BUN_INSTALL}/bin/palabra i nvm rust go deno fasm nvim haskell rizin yara -d /usr/local/src && \
+    bun ${BUN_INSTALL}/bin/palabra i nvm rust go deno fasm nvim rizin yara -d /usr/local/src && \
     echo "> install node" && \
     . $NVM_DIR/nvm.sh && \
     nvm i node && \
-    ln -fs /${NVM_DIR}/versions/node/$(node -v)/bin/node /usr/local/bin/node && \
-    echo "> remove user" && \
-    exit && \
+    ln -fs /${NVM_DIR}/versions/node/$(node -v)/bin/node /usr/local/bin/node
+
+USER root
+
+RUN echo "> remove user" && \
     userdel -r instalador && \
     echo "> install gritty" && \
     bun r gritty --omit dev && \
