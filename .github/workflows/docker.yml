@@ -91,6 +91,8 @@ jobs:
           file: docker/Dockerfile.io
           platforms: linux/amd64
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           tags: |
             coderaiser/cloudcmd:io
             coderaiser/cloudcmd:${{ steps.build.outputs.version }}-io
