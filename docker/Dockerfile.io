@@ -15,7 +15,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
     npm_config_cache=/tmp/npm-cache \
     PATH=/usr/local/src/bun/bin:$PATH \
     BUN_INSTALL=/usr/local/src/bun \
-    NPM_CONFIG_CACHE=/tmp/.npm
+    NPM_CONFIG_CACHE=/tmp/.npm \
+    PALABRA_DIR=/usr/local/src
 
 ARG UBUNTU_DEPS="libatomic1 curl wget git net-tools iproute2"
 ARG RUST_DEPS="build-essential"
@@ -41,7 +42,7 @@ RUN echo "> install bun" && \
     echo "> install npm globals" && \
     bun i palabra wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
     echo "> install rust go deno bun fasm nvim" && \
-    bun ${BUN_INSTALL}/bin/palabra i nvm rust go deno fasm nvim rizin yara -d /usr/local/src && \
+    bun ${BUN_INSTALL}/bin/palabra i nvm rust go deno fasm nvim rizin yara && \
     echo "> install node" && \
     . $NVM_DIR/nvm.sh && \
     nvm i node && \
