@@ -86,7 +86,6 @@ ENV cloudcmd_terminal=true \
     cloudcmd_open=false \
     PATH=node_modules/.bin:$PATH \
     PATH=~/.local/bin:$PATH \
-    PATH=/usr/local/src/bun/bin:$PATH \
     BUN_INSTALL_CACHE_DIR=/tmp/bun-cache \
     DENO_DIR=/tmp/deno-cache \
     LANG=en_US.UTF-8 \
