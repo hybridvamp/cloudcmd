@@ -21,12 +21,11 @@ ENV DEBIAN_FRONTEND=noninteractive \
 ARG UBUNTU_DEPS="libatomic1 curl wget git net-tools iproute2"
 ARG RUST_DEPS="build-essential"
 ARG DEPS="gdb upx-ucl less ffmpeg net-tools netcat-openbsd mc iputils-ping vim bat fzf locales sudo command-not-found ncdu aptitude htop btop hexyl"
-ARG HASKELL_DEPS="build-essential curl libffi-dev libffi8 libgmp-dev libgmp10 libncurses-dev pkg-config"
 
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get autoremove && \
-    apt-get install -y ${UBUNTU_DEPS} ${HASKELL_DEPS} ${RUST_DEPES} ${DEPS} && \
+    apt-get install -y ${UBUNTU_DEPS} ${RUST_DEPES} ${DEPS} && \
     echo "> Update command-not-found database. Run 'sudo apt update' to populate it." && \
     apt-get update && \
     apt-get autoremove && \
@@ -43,7 +42,7 @@ RUN echo "> install bun" && \
     echo "> install npm globals" && \
     bun i palabra wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
     echo "> install rust go deno bun fasm nvim" && \
-    bun ${BUN_INSTALL}/bin/palabra i nvm node rust go deno fasm nvim rizin yara haskell && \
+    bun ${BUN_INSTALL}/bin/palabra i nvm node rust go deno fasm nvim rizin yara && \
     echo "> install node" && \
     . $NVM_DIR/nvm.sh
 
