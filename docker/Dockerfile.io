@@ -42,11 +42,9 @@ RUN echo "> install bun" && \
     echo "> install npm globals" && \
     bun i palabra wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
     echo "> install rust go deno bun fasm nvim" && \
-    bun ${BUN_INSTALL}/bin/palabra i nvm rust go deno fasm nvim rizin yara && \
+    bun ${BUN_INSTALL}/bin/palabra i nvm node rust go deno fasm nvim rizin yara && \
     echo "> install node" && \
-    . $NVM_DIR/nvm.sh && \
-    nvm i node && \
-    ln -fs /${NVM_DIR}/versions/node/$(node -v)/bin/node /usr/local/bin/node
+    . $NVM_DIR/nvm.sh
 
 USER root
 
