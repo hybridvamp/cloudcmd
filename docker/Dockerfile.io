@@ -91,7 +91,7 @@ ENV cloudcmd_terminal=true \
     LANGUAGE=en_US:en \
     LC_ALL=en_US.UTF-8 \
     TERM=xterm-256color \
-    XDG_CACHE_HOME=/tmp/cache
+    XDG_CACHE_HOME=/tmp
 
 EXPOSE 8000
 
