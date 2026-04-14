@@ -1,6 +1,6 @@
 name: Docker IO
 on:
-    - push
+  - push
 jobs:
   buildx:
     runs-on: ubuntu-latest

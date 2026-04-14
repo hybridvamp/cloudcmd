@@ -442,6 +442,14 @@ async function _switchKey(event) {
         
         break;
     
+    case KEY.L:
+        if (ctrlMeta) {
+            CloudCmd.logOut();
+            event.preventDefault();
+        }
+        
+        break;
+    
     case KEY.M:
         if (ctrlMeta) {
             if (config('vim'))

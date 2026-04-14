@@ -22,6 +22,7 @@ export const D = 68;
 export const G = 71;
 export const J = 74;
 export const K = 75;
+export const L = 76;
 export const M = 77;
 export const O = 79;
 export const P = 80;
