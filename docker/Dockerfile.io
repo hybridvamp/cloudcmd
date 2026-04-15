@@ -57,6 +57,7 @@ RUN echo "> remove user" && \
     echo "> setup git" && \
     git config --global core.whitespace -trailing-space && \
     git config --global pull.rebase true && \
+    git config --global init.defaultBranch master && \
     echo "> configure bash" && \
     echo "alias ls='ls --color=auto'" >> /etc/bash.bashrc && \
     echo "alias buni='bun i --no-save'" >> /etc/bash.bashrc && \
