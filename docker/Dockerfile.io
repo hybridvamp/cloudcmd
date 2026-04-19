@@ -20,7 +20,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 ARG UBUNTU_DEPS="libatomic1 curl wget git net-tools iproute2"
 ARG RUST_DEPS="build-essential"
-ARG DEPS="gdb strace upx-ucl less ffmpeg net-tools netcat-openbsd mc iputils-ping vim bat fzf locales sudo command-not-found ncdu aptitude htop btop hexyl"
+ARG DEPS="pv gdb strace upx-ucl less ffmpeg net-tools netcat-openbsd mc iputils-ping vim bat fzf locales sudo command-not-found ncdu aptitude htop btop hexyl"
 
 RUN apt-get update && \
     apt-get upgrade -y && \
