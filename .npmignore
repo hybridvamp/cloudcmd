@@ -5,13 +5,12 @@
 *.cdr
 *.eps
 *.log
-*.loc
+*.lock
 
 .*
 
 manifest.yml
 docker-compose.yml
-yarn.lock
 now.json
 app.json
 bower.json
