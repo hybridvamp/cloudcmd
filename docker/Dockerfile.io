@@ -10,13 +10,13 @@ WORKDIR /usr/src/cloudcmd
 COPY package.json /usr/src/cloudcmd/
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    NVM_DIR=/usr/local/src/nvm \
+    NVM_DIR=/usr/local/share/nvm \
     PREFIX=/usr/local \
     npm_config_cache=/tmp/npm-cache \
-    PATH=/usr/local/src/bun/bin:$PATH \
-    BUN_INSTALL=/usr/local/src/bun \
+    PATH=/usr/local/share/bun/bin:$PATH \
+    BUN_INSTALL=/usr/local/share/bun \
     NPM_CONFIG_CACHE=/tmp/.npm \
-    PALABRA_DIR=/usr/local/src
+    PALABRA_DIR=/usr/local/share
 
 ARG UBUNTU_DEPS="libatomic1 curl wget git net-tools iproute2"
 ARG RUST_DEPS="build-essential"
@@ -62,7 +62,7 @@ RUN echo "> remove user" && \
     echo "alias ls='ls --color=auto'" >> /etc/bash.bashrc && \
     echo "alias buni='bun i --no-save'" >> /etc/bash.bashrc && \
     echo "alias bat='batcat'" >> /etc/bash.bashrc && \
-    echo ". /usr/local/src/nvm/nvm.sh" >> /etc/bash.bashrc && \
+    echo ". /usr/local/share/nvm/nvm.sh" >> /etc/bash.bashrc && \
     echo 'PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "' >> /etc/bash.bashrc && \
     echo "> setup inputrc" && \
     echo "set editing-mode vi" >> /etc/inputrc && \
@@ -92,7 +92,8 @@ ENV cloudcmd_terminal=true \
     LANGUAGE=en_US:en \
     LC_ALL=en_US.UTF-8 \
     TERM=xterm-256color \
-    XDG_CACHE_HOME=/tmp
+    XDG_CACHE_HOME=/tmp \
+    XDG_DATA_HOME=/usr/local/share
 
 EXPOSE 8000
 
