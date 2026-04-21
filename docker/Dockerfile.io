@@ -18,7 +18,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     NPM_CONFIG_CACHE=/tmp/.npm \
     PALABRA_DIR=/usr/local/share
 
-ARG UBUNTU_DEPS="libatomic1 curl wget git net-tools iproute2"
+ARG UBUNTU_DEPS="libatomic1 curl wget git net-tools iproute2 software-properties-common"
 ARG RUST_DEPS="build-essential"
 ARG DEPS="pv gdb strace upx-ucl less ffmpeg net-tools netcat-openbsd mc iputils-ping vim bat fzf locales sudo command-not-found ncdu aptitude htop btop hexyl"
 
@@ -26,8 +26,11 @@ RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get autoremove && \
     apt-get install -y ${UBUNTU_DEPS} ${RUST_DEPES} ${DEPS} && \
+    echo "> Install git" && \
+    add-apt-repository ppa:git-core/ppa -y && \
     echo "> Update command-not-found database. Run 'sudo apt update' to populate it." && \
     apt-get update && \
+    apt-get upgrade -y && \
     apt-get autoremove && \
     apt-get clean && \
     echo "> create user" && \
