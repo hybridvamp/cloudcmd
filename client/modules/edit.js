@@ -1,5 +1,5 @@
 /* global CloudCmd */
-import montag from 'montag';
+import {montag} from 'montag';
 import {promisify} from 'es6-promisify';
 import {tryToCatch} from 'try-to-catch';
 import createElement from '@cloudcmd/create-element';
