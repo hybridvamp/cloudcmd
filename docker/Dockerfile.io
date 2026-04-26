@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:resolute
 
 LABEL maintainer="Coderaiser"
 LABEL org.opencontainers.image.source="https://github.com/coderaiser/cloudcmd"
