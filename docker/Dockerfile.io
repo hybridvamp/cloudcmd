@@ -13,6 +13,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     NVM_DIR=/usr/local/share/nvm \
     PREFIX=/usr/local \
     npm_config_cache=/tmp/npm-cache \
+    GOPATH=/usr/local/share/go \
     PATH=/usr/local/share/bun/bin:$PATH \
     BUN_INSTALL=/usr/local/share/bun \
     NPM_CONFIG_CACHE=/tmp/.npm \
