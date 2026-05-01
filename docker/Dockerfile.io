@@ -22,7 +22,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
 ARG UBUNTU_DEPS="libatomic1 curl wget git net-tools iproute2 software-properties-common"
 ARG RUST_DEPS="build-essential"
 ARG DEPS="pv gdb strace upx-ucl less ffmpeg net-tools netcat-openbsd mc far2l iputils-ping vim bat fzf locales sudo command-not-found ncdu aptitude htop btop hexyl"
-ARG PALABRA_DEPS="nvm node rust go deno fasm nvim rizin yara gdu"
+ARG PALABRA_DEPS="nvm node rust go deno fasm nvim rizin yara gdu f4"
+ARG BUN_DEPS="palabra wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork"
 
 RUN apt-get update && \
     apt-get upgrade -y && \
@@ -45,7 +46,7 @@ USER instalador
 RUN echo "> install bun" && \
     curl https://bun.sh/install | bash && \
     echo "> install npm globals" && \
-    bun i palabra wisdom nupdate version-io redrun superc8 supertape madrun redlint putout renamify-cli runny redfork -g && \
+    bun i ${BUN_DEPS} -g && \
     echo "> install rust go deno bun fasm nvim" && \
     bun ${BUN_INSTALL}/bin/palabra i ${PALABRA_DEPS} && \
     echo "> install node" && \
