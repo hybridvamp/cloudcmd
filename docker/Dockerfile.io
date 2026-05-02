@@ -71,6 +71,7 @@ RUN echo "> remove user" && \
     echo "alias buni='bun i --no-save'" >> /etc/bash.bashrc && \
     echo "alias bat='batcat'" >> /etc/bash.bashrc && \
     echo ". /usr/local/share/nvm/nvm.sh" >> /etc/bash.bashrc && \
+    echo ". /usr/share/bash-completion/completions/git" >> /etc/bash.bashrc && \
     echo 'PS1="\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ "' >> /etc/bash.bashrc && \
     echo "> setup inputrc" && \
     echo "set editing-mode vi" >> /etc/inputrc && \
