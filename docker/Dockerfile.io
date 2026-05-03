@@ -104,7 +104,8 @@ ENV cloudcmd_terminal=true \
     LC_ALL=en_US.UTF-8 \
     TERM=xterm-256color \
     XDG_CACHE_HOME=/tmp \
-    XDG_DATA_HOME=/usr/local/share
+    XDG_DATA_HOME=/usr/local/share \
+    XDG_CONFIG_HOME=~/.config
 
 EXPOSE 8000
 
