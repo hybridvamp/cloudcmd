@@ -42,6 +42,7 @@ export default (key, operations = {}) => {
         edit = noop,
         operationCopy = noop,
         operationMove = noop,
+        rename = noop,
     } = operations;
     
     if (key === 'Enter')
@@ -125,6 +126,11 @@ export default (key, operations = {}) => {
     
     if (value === 'mf') {
         makeFile();
+        return end();
+    }
+    
+    if (value === 'rr') {
+        rename();
         return end();
     }
     

@@ -1,5 +1,3 @@
-/* global CloudCmd */
-/* global DOM */
 import vim from './vim.js';
 import * as finder from './find.js';
 import {
@@ -35,12 +33,13 @@ const getOperations = (event, deps) => {
         prompt = globalThis.DOM.Dialog.prompt,
         preventDefault = event?.preventDefault?.bind(event),
         stopImmediatePropagation = event?.preventDefault?.bind(event),
-        promptNewFile = DOM.promptNewFile,
+        promptNewFile = globalThis.DOM.promptNewFile,
         toggleSelectedFile,
         Buffer = {},
         createFindNext = _createFindNext,
         createFindPrevious = _createFindPrevious,
         createMakeFile = _createMakeFile,
+        renameCurrent,
     } = deps;
     
     return {
@@ -56,7 +55,10 @@ const getOperations = (event, deps) => {
             setCurrentByName,
         }),
         escape: unselectFiles,
-        
+        rename: () => {
+            event.preventDefault();
+            renameCurrent();
+        },
         remove: () => {
             Operation.show('delete');
         },
@@ -72,7 +74,7 @@ const getOperations = (event, deps) => {
         makeDirectory: () => {
             event.stopImmediatePropagation();
             event.preventDefault();
-            DOM.promptNewDir();
+            globalThis.DOM.promptNewDir();
         },
         
         terminal: () => {

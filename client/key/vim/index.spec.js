@@ -657,3 +657,21 @@ test('cloudcmd: client: vim: edit', async (t) => {
     t.calledWithNoArgs(CloudCmd.EditFileVim.show);
     t.end();
 });
+
+test('cloudcmd: client: vim: rename', async (t) => {
+    const DOM = getDOM();
+    const renameCurrent = stub();
+    
+    assign(DOM, {
+        renameCurrent,
+    });
+    
+    const event = {
+        preventDefault: stub(),
+    };
+    
+    await vim('rr', event, DOM);
+    
+    t.calledWithNoArgs(renameCurrent);
+    t.end();
+});
