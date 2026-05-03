@@ -18,7 +18,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     BUN_INSTALL=/usr/local/share/bun \
     NPM_CONFIG_CACHE=/tmp/.npm \
     PALABRA_DIR=/usr/local/share \
-    XDG_CONFIG_HOME=/etc
+    XDG_CONFIG_HOME=/usr/local/etc
 
 ARG UBUNTU_DEPS="libatomic1 curl wget git net-tools iproute2 software-properties-common"
 ARG RUST_DEPS="build-essential"
